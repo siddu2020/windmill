@@ -33,7 +33,7 @@ For progress on MVP see https://github.com/mayansalama/windmill/projects/1
 To run as a dev:
 
 1. Clone from git
-2. Run `curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python`
+2. Run `curl -sSL https://install.python-poetry.org | python3 -`
 3. Run `source $HOME/.poetry/env`
 4. Activate your python virtualenv of choice
 5. Run `poetry install -E airflow`

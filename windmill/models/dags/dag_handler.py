@@ -10,7 +10,7 @@ from typing import List, Dict, Union
 
 import black
 from airflow.models.dag import DAG
-from airflow.operators import BaseOperator
+from airflow.models.baseoperator import BaseOperator
 from dateutil import parser
 from inflection import underscore
 from jinja2 import Environment, PackageLoader, select_autoescape

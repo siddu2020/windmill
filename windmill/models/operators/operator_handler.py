@@ -1,7 +1,7 @@
 import logging
 import re
 
-from airflow.operators import BaseOperator
+from airflow.models.baseoperator import BaseOperator
 from docstring_parser import parse
 from marshmallow import schema
 
