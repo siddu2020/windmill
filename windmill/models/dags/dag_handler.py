@@ -497,6 +497,10 @@ class DagHandler(_ParamHandler):
             [DagHandler]: The converted DagHandler object
         """
         dag_params = cls.parameter_list_to_dict(wml_dict["dag"]["parameters"])
+        logging.info(dag_params["start_date"])
+        startDate = dag_params["start_date"]
+        startDate["type"] = 'datetime.datetime'
+        dag_params["start_date"] = startDate
         if not dag_params.get("dag_id"):
             raise DagHandlerValidationError(f"DAG is missing required parameter dag_id")
 

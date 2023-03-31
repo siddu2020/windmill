@@ -4,6 +4,7 @@ import pkgutil
 from importlib import import_module
 
 from airflow import operators
+from airflow.models.baseoperator import BaseOperator
 
 from .operator_handler import OperatorHandler
 from ...exceptions import OperatorMarshallError
@@ -69,7 +70,7 @@ class OperatorIndex:
         ops = set()
         for _, modname, _ in pkgutil.iter_modules(operators.__path__):
             try:
-                mod = import_module(f"airflow.operators.{modname}")
+                    mod = import_module(f"airflow.operators.{modname}")
             except (ModuleNotFoundError, SyntaxError) as e:
                 # NOTE Some of the HDFS libraries in Airflow don't support Python 3
                 logging.info(f"Unable to import operator from {modname}: {e}")
@@ -78,7 +79,7 @@ class OperatorIndex:
                 {
                     v
                     for v in mod.__dict__.values()
-                    if inspect.isclass(v) and issubclass(v, operators.BaseOperator)
+                    if inspect.isclass(v) and issubclass(v, BaseOperator)
                 }
             )
 

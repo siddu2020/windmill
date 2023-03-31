@@ -91,7 +91,7 @@ class DevCli:
         @staticmethod
         def start_frontend(**kwargs):
             wd = os.path.abspath(
-                os.path.join(os.path.dirname(__file__), "..", "http", "app")
+                os.path.join("/home/skoppara/source/windmill/windmill", "http", "app")
             )
             with subprocess.Popen(["npm", "start"], cwd=wd, stdout=subprocess.PIPE):
                 print("Running frontend on http://localhost:1234")

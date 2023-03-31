@@ -228,7 +228,7 @@
             },
             "properties": {
                 "description": "Execute a Bash script, command or set of commands.\n.. seealso::\n    For more information on how to use this operator, take a look at the guide:\n    :ref:`howto/operator:BashOperator`",
-                "module": "airflow.operators.bash_operator",
+                "module": "airflow.operators.bash",
                 "name": "Task1",
                 "parameters": [
                     {
@@ -527,7 +527,7 @@
             },
             "properties": {
                 "description": "Execute a Bash script, command or set of commands.\n.. seealso::\n    For more information on how to use this operator, take a look at the guide:\n    :ref:`howto/operator:BashOperator`",
-                "module": "airflow.operators.bash_operator",
+                "module": "airflow.operators.bash",
                 "parameters": [
                     {
                         "description": "The command, set of commands or reference to a\nbash script (must be '.sh') to be executed. (templated)",

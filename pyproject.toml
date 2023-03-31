@@ -8,8 +8,8 @@ license = "Apache-2.0"
 packages = [
     {include = "windmill"}
 ]
-homepage = "https://github.com/mayansalama/windmill"
-repository = "https://github.com/mayansalama/windmill"
+homepage = "https://github.com/siddu2020/windmill"
+repository = "https://github.com/sidu2020/windmill"
 exclude = ["windmill/http/app/*"]
 include = ["windmill/http/app/dist/*"]
 

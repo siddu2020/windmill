@@ -13,7 +13,6 @@ from ...models.dags.dag_handler import DagHandler
 from ...models.operators.operator_index import get_operator_index
 from ...models.schemas.app_schemas import OperatorSchema, MinimalWmlSchema
 
-
 app = Flask(__name__, static_folder="../app/dist/")
 
 #######################################################################
@@ -67,7 +66,7 @@ def post_wml(name):
     content = request.json
     # TODO: Is validation required here or just on DAG?
 
-    f_path = os.path.join(app.config["project_conf"].wml_dir, name)
+    f_path = os.path.join("/home/skoppara/source/windmill/wmls", name)
     with open(f_path, "w") as f:
         json.dump(content, f)
 
@@ -87,7 +86,7 @@ def post_dag(name):
 
     res = post_wml(name)
     if res[1] == 201:
-        f_path = os.path.join(app.config["project_conf"].wml_dir, name)
+        f_path = os.path.join("/home/skoppara/source/windmill/wmls", name)
         with open(f_path, "r") as f:
             wml_dict = json.load(f)
 
@@ -110,7 +109,7 @@ def post_dag(name):
             return f"Internal error converting WML", 500
 
         f_path = os.path.join(
-            app.config["project_conf"].dags_dir, f"{dag_handler.snake_name}.py"
+            "/home/skoppara/airflow/dags", f"{dag_handler.snake_name}.py"
         )
         with open(f_path, "w") as f:
             f.write(py_content)
