@@ -3,8 +3,9 @@ import * as localStorage from "local-storage";
 import { cloneDeep, mapValues } from "lodash";
 import * as React from "react";
 import { render } from "react-dom";
-import { FaFile, FaSave, FaFolderOpen, FaProjectDiagram } from "react-icons/fa";
+import { FaFile, FaSave, FaFolderOpen, FaProjectDiagram, FaPlay } from "react-icons/fa";
 import { APIClient } from "./ApiClient";
+import { AirflowClient } from "./AirflowClient";
 import {
   FileBrowser,
   RenameBox,
@@ -29,6 +30,7 @@ export interface IAppState extends IChart {
 
 export class App extends React.Component<{}, IAppState> {
   apiClient = new APIClient();
+  airflowClient = new AirflowClient();
 
   constructor(props) {
     super(props);
@@ -46,6 +48,7 @@ export class App extends React.Component<{}, IAppState> {
     this.updateFilename = this.updateFilename.bind(this);
     this.updateNodeProperties = this.updateNodeProperties.bind(this);
     this.updateDag = this.updateDag.bind(this);
+    this.runDag = this.runDag.bind(this);
   }
 
   public componentDidMount() {
@@ -203,6 +206,12 @@ export class App extends React.Component<{}, IAppState> {
         icon: <FaProjectDiagram />,
         callback: () => this.convertToDag(),
       },
+
+      {
+        tooltip: "Run DAG Manually",
+        icon: <FaPlay />,
+        callback: () => this.runDag(),
+      },
     ],
     // Uncomment to include
     // FIXME: include in a debug mode?
@@ -258,6 +267,32 @@ export class App extends React.Component<{}, IAppState> {
     const persistentState = { filename, dag, nodes, links };
 
     this.apiClient.convertToDag(`${this.state.filename}.wml`, persistentState);
+  }
+
+  public runDag() {
+    const { filename, dag, nodes, links } = this.cleanState(this.state);
+    console.log(dag.parameters[0].value);
+
+    var date = new Date();
+
+    var currentdatetimeUTC = new Date(Date.UTC(date.getUTCFullYear(),date.getUTCMonth(),date.getUTCDate(),date.getUTCHours(),date.getUTCMinutes(),date.getUTCSeconds())); 
+
+    const dag_id = dag.parameters[0].value;
+    const runDetails = {
+      "dag_run_id": this.uuidv4(),
+      "logical_date": currentdatetimeUTC,
+      "execution_date": currentdatetimeUTC,
+      "conf": {},
+      "note": "string"
+    };
+
+    this.airflowClient.runDag(dag_id, runDetails);
+  }
+
+  public uuidv4() {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
   }
 
   //////////////////////////////////////////////////
